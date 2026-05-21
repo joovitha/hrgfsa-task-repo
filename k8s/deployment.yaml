@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: docker.io/praveen6793/devops-app:latest1
+          image: docker.io/joovitha/devops-app:latest
           ports:
             - containerPort: 5000
           readinessProbe:
