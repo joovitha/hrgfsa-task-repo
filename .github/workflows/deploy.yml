@@ -84,5 +84,5 @@ jobs:
         USE_GKE_GCLOUD_AUTH_PLUGIN: True
       run: |
         kubectl apply -f k8s/
-        kubectl set image deployment/${{ github.event.inputs.image_name }} app=$IMAGE
-        kubectl rollout status deployment/${{ github.event.inputs.image_name }}
+        kubectl set image deployment/${{ env.IMAGE_NAME }} app=$IMAGE
+        kubectl rollout status deployment/${{ env.IMAGE_NAME }}
