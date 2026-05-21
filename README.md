@@ -45,7 +45,7 @@ terraform apply -var="project_id=devops-k8s-497007"
 
 This will take few minutes to deploy cluster with name "devops-cluster" as mentioned in variables.tf.
 
-Note: Reduce the custom node pool to 1 per node since we are using free tier.
+Note: Enabled autoscaling inthe cluster with min nodes to 2 and max set to 6 as i am using free tier and also standard disktype is used instead of SSD to avoid Quota doesn't exceed. 
 
 Once cluster has been created
 
@@ -82,3 +82,8 @@ Now all required authentication are completed, next step is building a docker im
 Once pushed kubectl commands will be used to deploy the resources(deployment and service) into cluster.
 
 
+## Installed Prometheus using Helm charts
+Created new namespace monitoring for prometheus deployment.
+installed prometheus using helm command and deployed prometheus service via loadbalancer.
+## Installed Grafana from docker image
+Added deployed Prometheus as datasource in grafana for monitoring.
