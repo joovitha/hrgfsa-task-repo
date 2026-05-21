@@ -58,7 +58,12 @@ jobs:
     - name: Login to Docker Hub
       run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
-      
+    - name: Debug inputs
+      run: |
+        echo "Username: ${{ secrets.DOCKERHUB_USERNAME }}"
+        echo "Image name: ${{ github.event.inputs.image_name }}"
+        echo "Image tag: ${{ github.event.inputs.image_tag }}"
+
     - name: Build and Push Docker Image
       run: |
         IMAGE="docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}"
