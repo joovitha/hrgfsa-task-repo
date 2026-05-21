@@ -3,6 +3,16 @@ name: Deploy to GKE via Docker Hub
 on:
   push:
     branches: [ "main" ]
+  workflow_dispatch:
+    inputs:
+      image_name:
+        description: "Docker image name (e.g., devops-app)"
+        required: true
+        default: "devops-app"
+      image_tag:
+        description: "Docker image tag (e.g., v1.0.0)"
+        required: true
+        default: "latest"
 
 jobs:
   deploy:
@@ -48,20 +58,18 @@ jobs:
     - name: Login to Docker Hub
       run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
-    # Build and push Docker image
+      
     - name: Build and Push Docker Image
       run: |
-        IMAGE_TAG=$(echo $GITHUB_SHA | cut -c1-7)
-        IMAGE="docker.io/${{ secrets.DOCKERHUB_USERNAME }}/devops-app:${IMAGE_TAG}"
+        IMAGE="docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}"
         echo "IMAGE=$IMAGE" >> $GITHUB_ENV
         docker build -t $IMAGE ./app
         docker push $IMAGE
 
-    # Deploy to GKE
     - name: Deploy to GKE
       env:
         USE_GKE_GCLOUD_AUTH_PLUGIN: True
       run: |
         kubectl apply -f k8s/
-        kubectl set image deployment/devops-app app=$IMAGE
-        kubectl rollout status deployment/devops-app
+        kubectl set image deployment/${{ github.event.inputs.image_name }} app=$IMAGE
+        kubectl rollout status deployment/${{ github.event.inputs.image_name }}
