@@ -1,6 +1,22 @@
 # HRGFSA Task Solution 
 This document specifies what are the steps and i have used to complete the required task.
 
+# Tools / Platform Used
+| Tool name            | Reason                                                                       |
+|----------------------|------------------------------------------------------------------------------|
+| **GCP**              | Since GCP provides free cluster i have utilised it.                          |
+| **DockerHub**        | For pushing docker images and utilise it cluster.               |
+| **python**           | For developing service which needs to be deployed                          |
+| **terraform**        | To create and deploy GKE cluster.                                           |
+| **GitHub**           | For version control of my code.  |
+| **Jenkins**          | For creating pipeline to build docker images and deploy to cluster.Later switched to Githubhub actions as facing authentication issue as i ran jenkins as standalone which doesn't have OIDC provider for authentication.|
+|**GitHub actions**    | For Continuos deployment into cluster whenever changes happened in the main branch|
+|**helm**              | To deploy prometheus helmcharts into GKE cluster|
+|**kubectl**           | To manage kubernetes cluster|
+|**Prometheus**        | Deployed to get cluster metrics on GKE cluster under monitoring namespace|
+|**Grafana**           | To monitor cluster metrics using prometheus as data source|                                             
+
+
 #  Folder Structure and Uses
 
 | Folder / File             | Description                                                                       |
