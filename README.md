@@ -1,13 +1,17 @@
 # HRGFSA Task Solution 
 This document specifies what are the steps and i have used to complete the required task.
 
-Folder and it's uses.
-    app ->                  application script and Dockerfile to build docker image.
-    k8s ->                  kubernetes manifest include deployment.yaml and service.yaml
-    scripts ->              To build and push docker images into docker hub
-    terraform ->            Terraform files to deploy GCP cluster
-    Jenkinsfile ->          Initially created for deploy via Jenkins but ignored because of complexity in GCP authentication
-    .github\workflows ->    Github action deployment yaml file.
+#  Folder Structure and Uses
+
+| Folder / File             | Description                                                                       |
+|----------------------------|--------------------------------------------------------------------------------- |
+| **app**                    | Application script and Dockerfile to build Docker image                          |
+| **k8s**                    | Kubernetes manifest including `deployment.yaml` and `service.yaml`               |
+| **scripts**                | Scripts to build and push Docker images into Docker Hub                          |
+| **terraform**              | Terraform files to deploy GCP cluster                                            |
+| **Jenkinsfile**            | Initially created for deploy via Jenkins but ignored due to GCP auth complexity  |
+| **.github/workflows**      | GitHub Action deployment YAML file                                               |
+
 
 
 ## Create Application
@@ -17,7 +21,7 @@ As our application is running on python docker pulls base image from python and 
 
 
 ## Authenticate to Google Cloud for application-default credentials
-
+```bash
 install gcloud cli(python needs to be above 3.10)
 
 gcloud components install gke-gcloud-auth-plugin
@@ -27,14 +31,14 @@ gcloud auth login
 gcloud auth application-default login
 
 gcloud config set project devops-k8s-497007
-
+```
 
 ## Using terraform to deploy kubernetes cluster
 
 This folder provisions a Google Kubernetes Engine (GKE) cluster using Terraform.
 
 install terraform cli
-
+```bash
 cd terraform
 
 terraform init
@@ -42,7 +46,7 @@ terraform init
 terraform plan -var="project_id=devops-k8s-497007"
 
 terraform apply -var="project_id=devops-k8s-497007"
-
+```
 This will take few minutes to deploy cluster with name "devops-cluster" as mentioned in variables.tf.
 
 Note: Enabled autoscaling inthe cluster with min nodes to 2 and max set to 6 as i am using free tier and also standard disktype is used instead of SSD to avoid Quota doesn't exceed. 
@@ -50,11 +54,14 @@ Note: Enabled autoscaling inthe cluster with min nodes to 2 and max set to 6 as 
 Once cluster has been created
 
 Run below command to get clusterconfig
-
+```bash
 gcloud container clusters get-credentials devops-cluster --region us-central1 --project devops-k8s-497007
-
+```
 Now run kubecctl commands to check cluster resources.
 
+```bash
+kubectl get nodes
+```
 For deploy using github actions, below values should be stored as secrets in github
 
 `GCP_PROJECT_ID`-- GCP project ID (devops-k8s-497007 for this project)
