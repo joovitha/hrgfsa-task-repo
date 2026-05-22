@@ -1,6 +1,13 @@
 # HRGFSA Task Solution 
 This document specifies what are the steps and i have used to complete the required task.
 
+# Application exposed on IP 
+
+```bash
+ 136.119.87.208 
+```
+
+
 # Tools / Platform Used
 | Tool name            | Reason                                                                       |
 |----------------------|------------------------------------------------------------------------------|
