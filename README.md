@@ -125,4 +125,4 @@ helm install prometheus prometheus-community/prometheus -n monitoring --set serv
 now prometheus got installed using helm charts and service got expsoed via loadbalancer.
 
 ## Installed Grafana from docker image
-Added deployed Prometheus as datasource in grafana for monitoring.
+Installed grafana via docker image in local for monitoring and added deployed Prometheus as datasource in grafana for monitoring.
