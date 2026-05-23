@@ -83,7 +83,7 @@ jobs:
         echo "Image tag: $IMAGE_TAG"
 
     - name: Build and Push Docker Image
-      if: ${{ github.event.inputs.build == 'true' }}
+      if: ${{ github.event.inputs.build == 'true' || true }}
       run: |
         IMAGE="docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
         echo "IMAGE=$IMAGE" >> $GITHUB_ENV
@@ -101,5 +101,5 @@ jobs:
         USE_GKE_GCLOUD_AUTH_PLUGIN: True
       run: |
         kubectl apply -f k8s/
-        kubectl set image deployment/${{ env.IMAGE_NAME }} app=$IMAGE
+        kubectl set image deployment/${{ env.IMAGE_NAME }} app=${{ env.IMAGE }}
         kubectl rollout status deployment/${{ env.IMAGE_NAME }}
