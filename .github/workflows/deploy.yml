@@ -97,7 +97,7 @@ jobs:
     - name: Use Existing Docker Image
       if: env.BUILD_FLAG == 'false'
       run: |
-        IMAGE="docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.tag }}"
+        IMAGE="docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
         echo "IMAGE=$IMAGE" >> $GITHUB_ENV
 
     - name: Deploy to GKE
