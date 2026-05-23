@@ -12,6 +12,14 @@ on:
         description: "Docker image tag (e.g., v1.0.0)"
         required: true
         default: "latest"
+      build:
+        description: "Build new docker image or not"
+        required: true
+        default: "true"
+        type: choice
+        options:
+          - "true"
+          - "false"
 
 jobs:
   deploy:
@@ -59,7 +67,7 @@ jobs:
 
     - name: Set image variables
       run: |
-        IMAGE_NAME="${{ github.event.inputs.image_name || 'devops-app' }}"
+        IMAGE_NAME="devops-app"
         if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
           IMAGE_TAG="${{ github.event.inputs.image_tag }}"
         else
@@ -75,11 +83,18 @@ jobs:
         echo "Image tag: $IMAGE_TAG"
 
     - name: Build and Push Docker Image
+      if: ${{ github.event.inputs.build == 'true' }}
       run: |
         IMAGE="docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
         echo "IMAGE=$IMAGE" >> $GITHUB_ENV
         docker build -t $IMAGE ./app
         docker push $IMAGE
+
+    - name: Use Existing Docker Image
+      if: ${{ github.event.inputs.build == 'false' }}
+      run: |
+        IMAGE="docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.tag }}"
+        echo "IMAGE=$IMAGE" >> $GITHUB_ENV
 
     - name: Deploy to GKE
       env:
