@@ -26,7 +26,7 @@ def calculator():
     <html>
       <head><title>Joovitha task Calculator</title></head>
       <body style="text-align:center; font-family:sans-serif;">
-        <h1>Hello from Joovitha. This is my sample Kubernetes project for HRGFSA</h1>
+        <h1>Hello from Joovitha. This is my Kubernetes project for HRGFSA</h1>
         <h2>Here is Calculator service</h2>
         <form method="post">
           <input type="text" name="num1" placeholder="Enter first number" required>

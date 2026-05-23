@@ -30,7 +30,7 @@ This document specifies what are the steps and i have used to complete the requi
 |----------------------------|--------------------------------------------------------------------------------- |
 | **app**                    | Application script and Dockerfile to build Docker image                          |
 | **k8s**                    | Kubernetes manifest including `deployment.yaml` and `service.yaml`               |
-| **scripts**                | Scripts to build and push Docker images into Docker Hub                          |
+| **scripts**                | Scripts to build and push Docker images into Docker Hub (Not used as it is integrated with pipeline itself)                         |
 | **terraform**              | Terraform files to deploy GCP cluster                                            |
 | **Jenkinsfile**            | Initially created for deploy via Jenkins but ignored due to GCP auth complexity  |
 | **.github/workflows**      | GitHub Action deployment YAML file                                               |
@@ -100,7 +100,7 @@ For deploy using github actions, below values should be stored as secrets in git
 | **`DOCKERHUB_TOKEN`**      | Docker Hub token                                                                      |
 
 
-## Build and pushing images to dockerhub
+## Build and pushing images to dockerhub (Not used as i integrated with pipeline itself)
 
 build_and_push.sh present inside scripts folder uses the provided docker username and token and builds the image with name devops-app if name is not provided and  also tag latest if external name is not provided.
 Once built it is then pushed to docker hub.
