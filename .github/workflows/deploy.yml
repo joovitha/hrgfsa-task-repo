@@ -83,7 +83,7 @@ jobs:
         echo "Image tag: $IMAGE_TAG"
 
     - name: Build and Push Docker Image
-      if: ${{ github.event.inputs.build == 'true' || true }}
+      if: ${{ github.event.inputs.build == 'true' }}
       run: |
         IMAGE="docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
         echo "IMAGE=$IMAGE" >> $GITHUB_ENV
