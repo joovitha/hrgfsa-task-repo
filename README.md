@@ -30,7 +30,7 @@ This document specifies what are the steps and i have used to complete the requi
 |----------------------------|--------------------------------------------------------------------------------- |
 | **app**                    | Application script and Dockerfile to build Docker image                          |
 | **k8s**                    | Kubernetes manifest including `deployment.yaml` and `service.yaml`               |
-| **scripts**                | Scripts to build and push Docker images into Docker Hub (Not used as it is integrated with pipeline itself)                         |
+| **scripts**                | Scripts to build and push Docker images into Docker Hub (Not using now as it is integrated with pipeline itself)                         |
 | **terraform**              | Terraform files to deploy GCP cluster                                            |
 | **Jenkinsfile**            | Initially created for deploy via Jenkins but ignored due to GCP auth complexity  |
 | **.github/workflows**      | GitHub Action deployment YAML file                                               |
