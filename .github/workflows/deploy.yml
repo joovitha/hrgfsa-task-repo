@@ -64,7 +64,11 @@ jobs:
     - name: Set image variables
       run: |
         IMAGE_NAME="${{ github.event.inputs.image_name || 'devops-app' }}"
-        IMAGE_TAG="${{ github.event.inputs.image_tag || github.sha }}"
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          IMAGE_TAG="${{ github.event.inputs.image_tag }}"
+        else
+          IMAGE_TAG="v${{ github.run_number }}"
+        fi
         echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
         echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
