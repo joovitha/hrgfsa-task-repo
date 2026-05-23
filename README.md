@@ -107,8 +107,9 @@ Once built it is then pushed to docker hub.
 
 
 
-
 ## Github actions workflow
+
+By default when pipeline is triggered via push/commits to main branch, new tag will be build and pushed with version number set as build number. 
 
 Whenever there is some push/commits into main branch of the repo.
 Workflow will be triggered which first checkout the latest commit and then authenticates to GCP via  Workload Identity Federation(WIF) using the service account created.
@@ -116,6 +117,16 @@ Then gcloud auth-plugin will be installed for authentiation and cluster will be 
 Now all required authentication are completed, next step is building a docker image from files present inside app folder and pushing it into docker hub.
 Once pushed kubectl commands will be used to deploy the resources(deployment and service) into cluster.
 
+
+## Github actions Manual trigger workflow
+
+This option can be used only when tag needs to be manually selected/provided.
+
+| Build new docker image or not false  | Docker image tag        | What will happen                                        |
+|--------------------------------------|-------------------------|---------------------------------------------------------|
+| **true**                             | <tag_name>              |Builds new image with provided tag name and deploys it   |
+| **false**                            | <tag_name>              |Use existing image with provided tag name and deploys it |
+ 
 
 ## Installed Prometheus using Helm charts
 Created new namespace monitoring for prometheus deployment.
