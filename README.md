@@ -16,7 +16,7 @@ This document specifies what are the steps and i have used to complete the requi
 | **python**           | For developing service which needs to be deployed                          |
 | **terraform**        | To create and deploy GKE cluster.                                           |
 | **GitHub**           | For version control of my code.  |
-| **Jenkins**          | For creating pipeline to build docker images and deploy to cluster.Later switched to Githubhub actions as facing authentication issue as i ran jenkins as standalone which doesn't have OIDC provider for authentication.|
+| **Jenkins**          | For creating pipeline to build docker images and deploy to cluster.Later switched to Github actions as facing authentication issue with GCP as i ran jenkins as standalone which doesn't have OIDC provider for authentication.|
 |**GitHub actions**    | For Continuos deployment into cluster whenever changes happened in the main branch|
 |**helm**              | To deploy prometheus helmcharts into GKE cluster|
 |**kubectl**           | To manage kubernetes cluster|
