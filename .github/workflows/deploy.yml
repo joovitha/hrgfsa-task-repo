@@ -8,10 +8,6 @@ on:
       - "README.md"
   workflow_dispatch:
     inputs:
-      image_name:
-        description: "Docker image name (e.g., devops-app)"
-        required: true
-        default: "devops-app"
       image_tag:
         description: "Docker image tag (e.g., v1.0.0)"
         required: true
