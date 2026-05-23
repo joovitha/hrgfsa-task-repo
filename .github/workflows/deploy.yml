@@ -70,20 +70,24 @@ jobs:
         IMAGE_NAME="devops-app"
         if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
           IMAGE_TAG="${{ github.event.inputs.image_tag }}"
+          BUILD_FLAG="${{ github.event.inputs.build }}"
         else
           IMAGE_TAG="v${{ github.run_number }}"
+          BUILD_FLAG="true" 
         fi
         echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
         echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+        echo "BUILD_FLAG=$BUILD_FLAG" >> $GITHUB_ENV
 
     - name: Debug inputs
       run: |
         echo "Username: ${{ secrets.DOCKERHUB_USERNAME }}"
         echo "Image name: $IMAGE_NAME"
         echo "Image tag: $IMAGE_TAG"
+        echo "Build flag: $BUILD_FLAG"
 
     - name: Build and Push Docker Image
-      if: ${{ github.event.inputs.build == 'true' }}
+      if: env.BUILD_FLAG == 'true'
       run: |
         IMAGE="docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
         echo "IMAGE=$IMAGE" >> $GITHUB_ENV
@@ -91,7 +95,7 @@ jobs:
         docker push $IMAGE
 
     - name: Use Existing Docker Image
-      if: ${{ github.event.inputs.build == 'false' }}
+      if: env.BUILD_FLAG == 'false'
       run: |
         IMAGE="docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.tag }}"
         echo "IMAGE=$IMAGE" >> $GITHUB_ENV
